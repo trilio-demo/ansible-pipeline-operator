@@ -1,4 +1,8 @@
-Steps to setup:
+# Trilio Ansible Playbook for Pipeline Operator Backups
+Set of Ansible Roles and Playbooks for backing up a large number of Pipeline Operator namespaces
+
+
+# Steps to setup:
 - untar the zip first
 - install ansible on your local setup
 - install kubernetes.core package using command `ansible-galaxy collection install kubernetes.core`
@@ -9,17 +13,18 @@ Steps to setup:
      - /Users/jeffligon/Documents/Demo-Platforms/demo-system-yamls/ansible/ansible-citi/roles/trilio_kubernetes
 - update trilio_kubernetes-config.yaml according to your configuration.
     for example:
-    # Username/Pass
+    ```yaml
+    // Username/Pass
     trilio_kubernetes_username: kubeadmin
     trilio_kubernetes_password: g9Q23-w47H7-ztBTF-qGNY8
     trilio_kubernetes_auth_api: https://api.dev.staging.presales.trilio.io:6443
     trilio_kubernetes_host: https://api.dev.staging.presales.trilio.io:6443 
-
-    # Backup Target
+     
+    // Backup Target
     trilio_kubernetes_target_name: nfs-sa
     trilio_kubernetes_target_namespace: trilio-system
 
-    # Backup Plan Details
+    // Backup Plan Details
     trilio_kubernetes_backup_namespaces:
       - pipelines-1
       - pipelines-2
@@ -27,16 +32,22 @@ Steps to setup:
       - pipelines-4
       - pipelines-5
     
-    # Choose actions to take  
+    // Choose actions to take  
     trilio_kubernetes_create_backupplan: true
     trilio_kubernetes_create_backup: true
     trilio_kubernetes_create_restore: false
+    ```
+- then finally run:
+```bash
+ansible-playbook trilio-utility.yaml 
+```
+to execute ansible plabook
 
-- then finally run `ansible-playbook trilio-utility.yaml ` to run ansible plabook
 
 
-# Collection: trilio.trilio_kubernetes
-Set of Ansible Roles and Playbooks for Trilio Cloud-Native Intelligent Recovery products
+
+
+
 
 # Python version compatibility
 This collection requires Python 3.7 or greater.
