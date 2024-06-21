@@ -42,19 +42,19 @@ To create the restores:
     trilio_kubernetes_create_restore: true
 ```
 
-The script is designed to run the backups in batches for scalability purposes.   The creation of Trilio backups consumes cluster resoucres because each backup creates one metamover pod and one datamover pod per PVC to be backed up.  These pods are temporary resources that only exist at the time of backup and then clean themselves up when the the backup is complete.  The amount of simultaneous backups you can run at once will be cluster specific based on available free CPU/Mem resoucres.   The default batch size is 2 but this can be modified in the config file.
+The script is designed to run the backups in batches for scalability purposes.   The creation of Trilio backups consumes cluster resources because each backup creates one metamover pod and one datamover pod per PVC to be backed up.  These pods are temporary resources that only exist at the time of backup and then clean themselves up when the the backup is complete.  The amount of simultaneous backups you can run at once will be cluster specific based on available free CPU/Mem resoucres.   The default batch size is 2 but this can be modified in the config file.
 
 
 # Steps to setup:
 - untar the zip first
 - install ansible on your local setup
 - install kubernetes.core package using command `ansible-galaxy collection install kubernetes.core`
-- after switch to playbook dir inside ansible-citi using `cd ansible-citi/playbooks`
+- after switch to playbook dir inside ansible-pipeline-operator using `cd ansible-pipeline-operator/playbooks`
 - update trilio-utility.yaml role file location to your playbooks directory
    for example:
    ```yaml
    roles:
-     - /Users/jeffligon/Documents/Demo-Platforms/demo-system-yamls/ansible/ansible-citi/roles/trilio_kubernetes
+     - /Users/jeffligon/Documents/Demo-Platforms/demo-system-yamls/ansible/ansible-pipeline-operator/roles/trilio_kubernetes
    ```
 - update trilio_kubernetes-config.yaml according to your configuration.
     for example:
