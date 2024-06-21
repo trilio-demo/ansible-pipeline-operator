@@ -1,0 +1,16 @@
+apiVersion: triliovault.trilio.io/v1
+kind: Restore
+metadata:
+  name: {{ item.backup_name }}-restore-{{ trilio_kubernetes_uniq_id }}
+  namespace: {{ item.restore_namespace }}
+spec:
+    source:
+        type: "Location"
+        location: {{ json_data[item.backup_name] }}
+        target:
+          name: {{ trilio_kubernetes_target_name }}
+          namespace: {{ trilio_kubernetes_target_namespace }}
+    restoreFlags:
+        skipIfAlreadyExists: true
+    restoreNamespace: {{ item.restore_namespace }}
+

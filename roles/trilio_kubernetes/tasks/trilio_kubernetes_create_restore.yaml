@@ -1,0 +1,60 @@
+# code: language=ansible
+
+# Set of tasks for creating performing a Trilio for Kubernetes Restore
+#
+# Authors: Kevin Jackson <kevin.jackson at trilio io>
+
+- name: Perform Restore
+  tags: ['restore']
+  block:
+    - name: Check if .trilio directory exists
+      stat:
+        path: "./.trilio"
+      register: directory_check
+
+    - name: Fail if directory does not exist
+      fail:
+        msg: "The directory ./.trilio does not exist."
+      when: not directory_check.stat.exists
+
+    - name: Check if JSON file exists
+      stat:
+        path: "./.trilio/backups_output.json"
+      register: json_file_stat
+
+    - name: Fail if JSON file does not exist
+      fail:
+        msg: "The JSON file ./.trilio/backups_output.json does not exist."
+      when: not json_file_stat.stat.exists
+
+    - name: Read JSON file
+      slurp:
+        src: "./.trilio/backups_output.json"
+      register: json_file_content
+      when: json_file_stat.stat.exists
+
+    - name: Decode JSON file content and set to variable
+      set_fact:
+        json_data: "{{ json_file_content.content | b64decode | from_json }}"
+      when: json_file_stat.stat.exists
+
+    - name: Execute Restore Tasks
+      ansible.builtin.include_tasks: "trilio_kubernetes_create_restore_kubeconfig.yaml"
+      vars:
+        trilio_kubernetes_uniq_id: "{{ ansible_date_time.date }}-{{ ansible_date_time.epoch }}"
+        restore_info: "{{ item }}"
+      when:
+        - trilio_kubernetes_create_restore | bool
+        - trilio_kubernetes_distro == 'kubernetes' or trilio_kubernetes_auth_type == 'external'
+      loop: "{{ trilio_kubernetes_retore_info | batch(2) }}"
+
+    - name: Execute Restore Tasks (OpenShift Auth)
+      ansible.builtin.include_tasks: "trilio_kubernetes_create_restore_password.yaml"
+      tags: ['backup']
+      vars:
+        trilio_kubernetes_uniq_id: "{{ ansible_date_time.date }}-{{ ansible_date_time.epoch }}"
+        restore_info: "{{ item }}"
+      when:
+        - trilio_kubernetes_distro == 'openshift' and trilio_kubernetes_auth_type == 'password'
+        - trilio_kubernetes_create_restore | bool
+      loop: "{{ trilio_kubernetes_retore_info | batch(2) }}"

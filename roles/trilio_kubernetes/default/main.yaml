@@ -1,0 +1,4 @@
+trilio_kubernetes_check: true
+trilio_kubernetes_distro: openshift
+trilio_kubernetes_create_backupplan: true
+trilio_kubernetes_create_backup: true

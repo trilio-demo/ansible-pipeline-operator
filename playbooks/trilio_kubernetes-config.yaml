@@ -1,0 +1,85 @@
+# Trilio For Kubernetes
+# Authors: Kevin Jackson <kevin.jackson at trilio io>
+#
+
+# Specify environment/auth details - username/pass (in a vault specified on cli)
+# Username/Pass
+# Note: 'openshift' assumes kubectl and oc tools installed
+trilio_kubernetes_distro: openshift # kubernetes | openshift
+trilio_kubernetes_auth_type: password # password | kubeconfig | external
+trilio_kubernetes_username: kubeadmin
+trilio_kubernetes_password: g9QpG-w57H9-ztBSY-qGNI4
+trilio_kubernetes_auth_api: https://api.dev.staging.presales.trilio.io:6443
+trilio_kubernetes_host: https://api.dev.staging.presales.trilio.io:6443 # `oc cluster-info` can give this url
+# Kubeconfig
+kubeconfig: # path to kubeconfig file if kube_auth_type is 'kubeconfig'
+
+# Trilio Operator
+trilio_kubernetes_operator_namespace: trilio-system
+
+# Always authenticate unless you have a reason to skip this
+trilio_kubernetes_auth: true
+# Performs a check of the license and other prequisites
+trilio_kubernetes_check: true
+# Uses the values in the config file to create a demo app, target, backuppplan, backup and restore.
+# Set this value for first installation test
+# Specify whether to auto clean the deployment/objects after smoketest
+# 
+
+# Use the CLI to poll for running tasks
+trilio_kubernetes_cli: true
+
+#
+# Backup Target
+#
+# Currently Supports AWS S3 ONLY
+# IMPORTANT: See templates/target.yaml.j2 to modify for other targets
+# TODO: Specify NFS or S3
+trilio_kubernetes_target_name: nfs-sa
+trilio_kubernetes_target_namespace: trilio-system
+#
+# Backup Plan Details
+# Note this must be relevant to the test/demo app
+trilio_kubernetes_backup_type: Full
+trilio_kubernetes_create_backupplan: false
+trilio_kubernetes_create_backup: false
+trilio_kubernetes_backupplan_name: "pipeline-backupplan"
+trilio_kubernetes_backup_name: "pipeline-backup"
+trilio_kubernetes_backupplan_subscription_name: "openshift-pipelines-operator-rh"
+trilio_kubernetes_backupplan_subscription_namespace: "openshift-operators"
+trilio_kubernetes_backupplan_operatorId: "pipeline"
+trilio_kubernetes_batch_size: 2
+trilio_kubernetes_backup_namespaces:
+  - pipelines-1
+  - pipelines-2
+  - pipelines-3
+  - pipelines-4
+  - pipelines-5
+
+gvk_list:
+  - group: tekton.dev
+    kind: Task
+    version: v1
+  - group: tekton.dev
+    kind: Pipeline
+    version: v1
+
+trilio_kubernetes_create_restore: true
+trilio_kubernetes_retore_info:
+  - restore_namespace: jeff-pipelines-restore-1
+    backup_name: "pipeline-backup-pipelines-1-2024-06-18-1718739759"
+  - restore_namespace: jeff-pipelines-restore-2
+    backup_name: "pipeline-backup-pipelines-2-2024-06-18-1718739759"
+  - restore_namespace: jeff-pipelines-restore-3
+    backup_name: "pipeline-backup-pipelines-3-2024-06-18-1718739759"
+  - restore_namespace: jeff-pipelines-restore-4
+    backup_name: "pipeline-backup-pipelines-4-2024-06-18-1718739759"
+  - restore_namespace: jeff-pipelines-restore-5
+    backup_name: "pipeline-backup-pipelines-5-2024-06-18-1718739759"
+
+# oc get backups -A |grep pipeline-backup
+# pipelines-1                pipeline-backup-pipelines-1-2024-06-18-1718739759                pipeline-backupplan-pipelines-1                                  Full          Available   1087512576    2024-06-18T19:45:31Z   2024-06-18T19:45:31Z   2024-06-18T19:47:38Z   100                    App            2m7s
+# pipelines-2                pipeline-backup-pipelines-2-2024-06-18-1718739759                pipeline-backupplan-pipelines-2                                  Full          Available   698228736     2024-06-18T19:45:32Z   2024-06-18T19:45:32Z   2024-06-18T19:47:38Z   100                    App            2m6s
+# pipelines-3                pipeline-backup-pipelines-3-2024-06-18-1718739759                pipeline-backupplan-pipelines-3                                  Full          Available   1088172032    2024-06-18T19:48:36Z   2024-06-18T19:48:36Z   2024-06-18T19:50:47Z   100                    App            2m11s
+# pipelines-4                pipeline-backup-pipelines-4-2024-06-18-1718739759                pipeline-backupplan-pipelines-4                                  Full          Available   1087119360    2024-06-18T19:48:37Z   2024-06-18T19:48:37Z   2024-06-18T19:50:45Z   100                    App            2m8s
+# pipelines-5                pipeline-backup-pipelines-5-2024-06-18-1718739759                pipeline-backupplan-pipelines-5   

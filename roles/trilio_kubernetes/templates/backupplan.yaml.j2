@@ -1,0 +1,23 @@
+apiVersion: triliovault.trilio.io/v1
+kind: BackupPlan
+metadata:
+  name: {{ trilio_kubernetes_backupplan_name }}-{{ item }}
+  namespace: {{ item }}
+spec:
+  backupConfig:
+    target:
+      name: {{ trilio_kubernetes_target_name }}
+      namespace: {{ trilio_kubernetes_target_namespace }}
+  backupPlanComponents:
+    operators:
+    - customResources:
+{% for gvk in gvk_list %}
+        - groupVersionKind:
+            group: {{ gvk.group }}
+            kind: {{ gvk.kind }}
+            version: {{ gvk.version }}
+{% endfor %}
+      operatorId: {{ trilio_kubernetes_backupplan_operatorId }}
+      subscription:
+        name: {{ trilio_kubernetes_backupplan_subscription_name }}
+        namespace: {{ trilio_kubernetes_backupplan_subscription_namespace }}

@@ -1,0 +1,24 @@
+- name: Authentication to Kubernetes
+  ansible.builtin.include_tasks: trilio_kubernetes_auth.yaml
+  tags: ['auth']
+  when: trilio_kubernetes_auth | bool
+#
+#- name: Basic Trilio for Kubernetes Checks
+#  ansible.builtin.include_tasks: trilio_kubernetes_check.yaml
+#  tags: ['check']
+#  when: trilio_kubernetes_check | bool
+#
+- name: Trilio for Kubernetes Create Backup Plan
+  ansible.builtin.include_tasks: trilio_kubernetes_create_backupplan.yaml
+  tags: ['backupplan']
+  when: trilio_kubernetes_create_backupplan | bool
+
+- name: Trilio for Kubernetes Execute a Backup
+  ansible.builtin.include_tasks: trilio_kubernetes_create_backup.yaml
+  tags: ['backup']
+  when: trilio_kubernetes_create_backup | bool
+
+- name: Trilio for Kubernetes Execute a Restore
+  ansible.builtin.include_tasks: trilio_kubernetes_create_restore.yaml
+  tags: ['restore']
+  when: trilio_kubernetes_create_restore | bool

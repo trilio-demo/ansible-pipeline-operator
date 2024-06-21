@@ -1,0 +1,58 @@
+# code: language=ansible
+
+# Set of tasks for creating a Trilio for Kubernetes Backup
+#
+# Authors: Kevin Jackson <kevin.jackson at trilio io>
+- name: Create directory if it doesn't exist
+  file:
+    path: "./.trilio"
+    state: directory
+    mode: 0755
+- name: Check if JSON file exists
+  stat:
+    path: "./.trilio/backups_output.json"
+  register: json_file_stat
+
+- name: Read JSON file
+  slurp:
+    src: "./.trilio/backups_output.json"
+  register: json_file_content
+  when: json_file_stat.stat.exists
+
+- name: Initialize backup_metadata_to_location dictionary
+  set_fact:
+    backup_metadata_to_location: {}
+
+- name: Decode JSON file content and set to variable
+  set_fact:
+    backup_metadata_to_location: "{{ json_file_content.content | b64decode | from_json }}"
+  when: json_file_stat.stat.exists
+
+- name: Create Backup
+  loop: "{{ trilio_kubernetes_backup_namespaces | batch(trilio_kubernetes_batch_size)  }}"
+  ansible.builtin.include_tasks: "trilio_kubernetes_create_backup_kubeconfig.yaml"
+  tags: ['backup', 'smoketest']
+  when:
+    - trilio_kubernetes_distro == 'kubernetes' or trilio_kubernetes_auth_type == 'external'
+  vars:
+    trilio_kubernetes_namespace_create: "{{ trilio_kubernetes_namespace }}"
+    namespaces: "{{ item }}"
+    trilio_kubernetes_uniq_id: "{{ ansible_date_time.date }}-{{ ansible_date_time.epoch }}"
+
+- name: Create Backup (OpenShift Auth)
+  loop: "{{ trilio_kubernetes_backup_namespaces | batch(trilio_kubernetes_batch_size)  }}"
+  ansible.builtin.include_tasks: "trilio_kubernetes_create_backup_password.yaml"
+  tags: ['backup', 'smoketest']
+  when:
+    - trilio_kubernetes_distro == 'openshift' and trilio_kubernetes_auth_type == 'password'
+  vars:
+    trilio_kubernetes_namespace_create: "{{ trilio_kubernetes_namespace }}"
+    trilio_kubernetes_auth_results: "{{ trilio_kubernetes_openshift_auth_results }}"
+    namespaces: "{{ item }}"
+    trilio_kubernetes_uniq_id: "{{ ansible_date_time.date }}-{{ ansible_date_time.epoch }}"
+
+
+- name: Save backup metadata to location dictionary to JSON file
+  copy:
+    content: "{{ backup_metadata_to_location | to_json }}"
+    dest: "./.trilio/backups_output.json"

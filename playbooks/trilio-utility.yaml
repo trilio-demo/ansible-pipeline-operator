@@ -1,0 +1,5 @@
+- name: Trilio for Kubernetes Ansible Utility
+  hosts: localhost
+  vars_files: trilio_kubernetes-config.yaml
+  roles:
+     - /Users/jeffligon/Documents/Demo-Platforms/demo-system-yamls/ansible/ansible-citi/roles/trilio_kubernetes
