@@ -8,11 +8,11 @@ The demo example is the following:
 
 OpenShift cluster with Pipelines Operator installed.
 Pipelines deployed in the following namespaces:
-      - pipelines-1
-      - pipelines-2
-      - pipelines-3
-      - pipelines-4
-      - pipelines-5
+- pipelines-1
+- pipelines-2
+- pipelines-3
+- pipelines-4
+- pipelines-5
 
 In order to capture the pipeline, you need to create an applicaiton backup for the pipeline operator plus the CRs - Pipeline and Task.   Once you run the pipeline, other CRs get crated like PipelineRun and TaskRun, we do not need to back these up.
 
