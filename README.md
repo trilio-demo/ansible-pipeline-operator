@@ -1,6 +1,47 @@
 # Trilio Ansible Playbook for Pipeline Operator Backups
 Set of Ansible Roles and Playbooks for backing up a large number of Pipeline Operator namespaces
 
+# Use Case
+The intended use case for using this playbook is when there is an OpenShift cluster using the Pipelines Operator to deploy applications via CI/CD.   Trilio can backup an Operator and it's extended Custom Resources using an application backup.  The extra CRs are added to the backup plan.
+
+The demo example is the following:
+
+OpenShift cluster with Pipelines Operator installed.
+Pipelines deployed in the following namespaces:
+      - pipelines-1
+      - pipelines-2
+      - pipelines-3
+      - pipelines-4
+      - pipelines-5
+
+In order to capture the pipeline, you need to create an applicaiton backup for the pipeline operator plus the CRs - Pipeline and Task.   Once you run the pipeline, other CRs get crated like PipelineRun and TaskRun, we do not need to back these up.
+
+This playbook will then create 5 applicaton backups for the 5 namespaces.
+
+You need to adjust the config file for which actions the ansible scripts will perform.
+
+To create the backupplans and backups:
+```yaml
+// Choose actions to take  
+    trilio_kubernetes_create_backupplan: true
+    trilio_kubernetes_create_backup: true
+    trilio_kubernetes_create_restore: false
+```
+To create additional backups:
+```yaml
+// Choose actions to take  
+    trilio_kubernetes_create_backupplan: false
+    trilio_kubernetes_create_backup: true
+    trilio_kubernetes_create_restore: false
+```
+To create the restores:
+```yaml
+// Choose actions to take  
+    trilio_kubernetes_create_backupplan: false
+    trilio_kubernetes_create_backup: false
+    trilio_kubernetes_create_restore: true
+```
+
 
 # Steps to setup:
 - untar the zip first
@@ -9,8 +50,10 @@ Set of Ansible Roles and Playbooks for backing up a large number of Pipeline Ope
 - after switch to playbook dir inside ansible-citi using `cd ansible-citi/playbooks`
 - update trilio-utility.yaml role file location to your playbooks directory
    for example:
+   ```yaml
    roles:
      - /Users/jeffligon/Documents/Demo-Platforms/demo-system-yamls/ansible/ansible-citi/roles/trilio_kubernetes
+   ```
 - update trilio_kubernetes-config.yaml according to your configuration.
     for example:
     ```yaml
@@ -41,7 +84,7 @@ Set of Ansible Roles and Playbooks for backing up a large number of Pipeline Ope
 ```bash
 ansible-playbook trilio-utility.yaml 
 ```
-to execute ansible plabook
+to execute ansible playbook.
 
 
 
