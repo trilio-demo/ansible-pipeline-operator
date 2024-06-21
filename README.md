@@ -61,7 +61,7 @@ The script is designed to run the backups in batches for scalability purposes.  
     ```yaml
     // Username/Pass
     trilio_kubernetes_username: kubeadmin
-    trilio_kubernetes_password: g9Q23-w47H7-ztBTF-qGNY8
+    trilio_kubernetes_password: ...
     trilio_kubernetes_auth_api: https://api.dev.staging.presales.trilio.io:6443
     trilio_kubernetes_host: https://api.dev.staging.presales.trilio.io:6443 
      
