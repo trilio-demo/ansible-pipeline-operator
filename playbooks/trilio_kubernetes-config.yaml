@@ -42,7 +42,7 @@ trilio_kubernetes_target_namespace: trilio-system
 # Note this must be relevant to the test/demo app
 trilio_kubernetes_backup_type: Full
 trilio_kubernetes_create_backupplan: false
-trilio_kubernetes_create_backup: true
+trilio_kubernetes_create_backup: false
 trilio_kubernetes_backupplan_name: "pipeline-backupplan"
 trilio_kubernetes_backup_name: "pipeline-backup"
 trilio_kubernetes_backupplan_subscription_name: "openshift-pipelines-operator-rh"
@@ -64,22 +64,22 @@ gvk_list:
     kind: Pipeline
     version: v1
 
-trilio_kubernetes_create_restore: false
+trilio_kubernetes_create_restore: true
 trilio_kubernetes_retore_info:
   - restore_namespace: jeff-pipelines-restore-1
-    backup_name: "pipeline-backup-pipelines-1-2024-06-18-1718739759"
+    backup_name: "pipeline-backup-pipelines-1-2024-06-24-1719243719"
   - restore_namespace: jeff-pipelines-restore-2
-    backup_name: "pipeline-backup-pipelines-2-2024-06-18-1718739759"
+    backup_name: "pipeline-backup-pipelines-2-2024-06-24-1719243719"
   - restore_namespace: jeff-pipelines-restore-3
-    backup_name: "pipeline-backup-pipelines-3-2024-06-18-1718739759"
+    backup_name: "pipeline-backup-pipelines-3-2024-06-24-1719243719"
   - restore_namespace: jeff-pipelines-restore-4
-    backup_name: "pipeline-backup-pipelines-4-2024-06-18-1718739759"
+    backup_name: "pipeline-backup-pipelines-4-2024-06-24-1719243719"
   - restore_namespace: jeff-pipelines-restore-5
-    backup_name: "pipeline-backup-pipelines-5-2024-06-18-1718739759"
+    backup_name: "pipeline-backup-pipelines-5-2024-06-24-1719243719"
 
 # oc get backups -A |grep pipeline-backup
-# pipelines-1                pipeline-backup-pipelines-1-2024-06-18-1718739759                pipeline-backupplan-pipelines-1                                  Full          Available   1087512576    2024-06-18T19:45:31Z   2024-06-18T19:45:31Z   2024-06-18T19:47:38Z   100                    App            2m7s
-# pipelines-2                pipeline-backup-pipelines-2-2024-06-18-1718739759                pipeline-backupplan-pipelines-2                                  Full          Available   698228736     2024-06-18T19:45:32Z   2024-06-18T19:45:32Z   2024-06-18T19:47:38Z   100                    App            2m6s
-# pipelines-3                pipeline-backup-pipelines-3-2024-06-18-1718739759                pipeline-backupplan-pipelines-3                                  Full          Available   1088172032    2024-06-18T19:48:36Z   2024-06-18T19:48:36Z   2024-06-18T19:50:47Z   100                    App            2m11s
-# pipelines-4                pipeline-backup-pipelines-4-2024-06-18-1718739759                pipeline-backupplan-pipelines-4                                  Full          Available   1087119360    2024-06-18T19:48:37Z   2024-06-18T19:48:37Z   2024-06-18T19:50:45Z   100                    App            2m8s
-# pipelines-5                pipeline-backup-pipelines-5-2024-06-18-1718739759                pipeline-backupplan-pipelines-5   
+# pipelines-1                pipeline-backup-pipelines-1-2024-06-24-1719243719                pipeline-backupplan-pipelines-1                                  Full          Available   1087512576    2024-06-18T19:45:31Z   2024-06-18T19:45:31Z   2024-06-18T19:47:38Z   100                    App            2m7s
+# pipelines-2                pipeline-backup-pipelines-2-2024-06-24-1719243719                pipeline-backupplan-pipelines-2                                  Full          Available   698228736     2024-06-18T19:45:32Z   2024-06-18T19:45:32Z   2024-06-18T19:47:38Z   100                    App            2m6s
+# pipelines-3                pipeline-backup-pipelines-3-2024-06-24-1719243719                pipeline-backupplan-pipelines-3                                  Full          Available   1088172032    2024-06-18T19:48:36Z   2024-06-18T19:48:36Z   2024-06-18T19:50:47Z   100                    App            2m11s
+# pipelines-4                pipeline-backup-pipelines-4-2024-06-24-1719243719                pipeline-backupplan-pipelines-4                                  Full          Available   1087119360    2024-06-18T19:48:37Z   2024-06-18T19:48:37Z   2024-06-18T19:50:45Z   100                    App            2m8s
+# pipelines-5                pipeline-backup-pipelines-5-2024-06-24-1719243719                pipeline-backupplan-pipelines-5   

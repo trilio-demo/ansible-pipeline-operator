@@ -2,4 +2,4 @@
   hosts: localhost
   vars_files: trilio_kubernetes-config.yaml
   roles:
-     - /Users/jeffligon/Documents/Demo-Platforms/demo-system-yamls/ansible/ansible-pipeline-operator/roles/trilio_kubernetes
+     - ../roles/trilio_kubernetes
