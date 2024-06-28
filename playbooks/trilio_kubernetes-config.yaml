@@ -8,7 +8,7 @@
 trilio_kubernetes_distro: openshift # kubernetes | openshift
 trilio_kubernetes_auth_type: password # password | kubeconfig | external
 trilio_kubernetes_username: kubeadmin
-trilio_kubernetes_password: g9QpG-w57H9-ztBSY-qGNI4
+trilio_kubernetes_password: ...
 trilio_kubernetes_auth_api: https://api.dev.staging.presales.trilio.io:6443
 trilio_kubernetes_host: https://api.dev.staging.presales.trilio.io:6443 # `oc cluster-info` can give this url
 # Kubeconfig
