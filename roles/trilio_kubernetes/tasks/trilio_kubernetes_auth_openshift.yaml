@@ -23,8 +23,8 @@
         cacheable: true
 
     - name: Log in to OpenShift (obtain access token)
-      # redhat.openshift.openshift_auth:
-      community.okd.openshift_auth:
+      redhat.openshift.openshift_auth:
+      # community.okd.openshift_auth:
         username: "{{ trilio_kubernetes_username }}"
         password: "{{ trilio_kubernetes_password }}"
         validate_certs: false
