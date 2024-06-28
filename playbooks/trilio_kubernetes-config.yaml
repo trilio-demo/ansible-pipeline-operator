@@ -8,7 +8,7 @@
 trilio_kubernetes_distro: openshift # kubernetes | openshift
 trilio_kubernetes_auth_type: password # password | kubeconfig | external
 trilio_kubernetes_username: kubeadmin
-trilio_kubernetes_password: ...
+trilio_kubernetes_password: g9QpG-w57H9-ztBSY-qGNI4
 trilio_kubernetes_auth_api: https://api.dev.staging.presales.trilio.io:6443
 trilio_kubernetes_host: https://api.dev.staging.presales.trilio.io:6443 # `oc cluster-info` can give this url
 # Kubeconfig
@@ -42,7 +42,7 @@ trilio_kubernetes_target_namespace: trilio-system
 # Note this must be relevant to the test/demo app
 trilio_kubernetes_backup_type: Full
 trilio_kubernetes_create_backupplan: false
-trilio_kubernetes_create_backup: false
+trilio_kubernetes_create_backup: true
 trilio_kubernetes_backupplan_name: "pipeline-backupplan"
 trilio_kubernetes_backup_name: "pipeline-backup"
 trilio_kubernetes_backupplan_subscription_name: "openshift-pipelines-operator-rh"
@@ -64,7 +64,7 @@ gvk_list:
     kind: Pipeline
     version: v1
 
-trilio_kubernetes_create_restore: true
+trilio_kubernetes_create_restore: false
 trilio_kubernetes_retore_info:
   - restore_namespace: jeff-pipelines-restore-1
     backup_name: "pipeline-backup-pipelines-1-2024-06-24-1719243719"
