@@ -18,7 +18,7 @@ In order to capture the pipeline, you need to create an application backup for t
 
 An application backup can currently only contain extra CRs from one specified namespace.  Therefore, the backup all of the reources in this demo, you need to create 5 application backupplans and 5 backups. This playbook will then create 5 applicaton backupplans and backups for the 5 namespaces.  This playbook can also automate the restore process by iterating through the restores.
 
-You need to adjust the config file for which actions the ansible scripts will perform.
+You need to adjust the "trilio_kubernetes-config.yaml" file for which actions the ansible scripts will perform.
 
 To create the backupplans and backups:
 ```yaml
@@ -50,12 +50,6 @@ The script is designed to run the backups in batches for scalability purposes.  
 - install ansible on your local setup
 - install kubernetes.core package using command `ansible-galaxy collection install kubernetes.core`
 - after switch to playbook dir inside ansible-pipeline-operator using `cd ansible-pipeline-operator/playbooks`
-- update trilio-utility.yaml role file location to your playbooks directory
-   for example:
-   ```yaml
-   roles:
-     - /Users/jeffligon/Documents/Demo-Platforms/demo-system-yamls/ansible/ansible-pipeline-operator/roles/trilio_kubernetes
-   ```
 - update trilio_kubernetes-config.yaml according to your configuration.
     for example:
     ```yaml
