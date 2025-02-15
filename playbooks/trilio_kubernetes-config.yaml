@@ -8,9 +8,9 @@
 trilio_kubernetes_distro: openshift # kubernetes | openshift
 trilio_kubernetes_auth_type: password # password | kubeconfig | external
 trilio_kubernetes_username: kubeadmin
-trilio_kubernetes_password: ...
-trilio_kubernetes_auth_api: https://api.dev.staging.presales.trilio.io:6443
-trilio_kubernetes_host: https://api.dev.staging.presales.trilio.io:6443 # `oc cluster-info` can give this url
+trilio_kubernetes_password: rCxJj-z7pHq-BzfJD-iMcwA
+trilio_kubernetes_auth_api: https://api.ocp-dc3.demo.presales.trilio.io:6443
+trilio_kubernetes_host: https://api.ocp-dc3.demo.presales.trilio.io:6443 # `oc cluster-info` can give this url
 # Kubeconfig
 kubeconfig: # path to kubeconfig file if kube_auth_type is 'kubeconfig'
 
@@ -35,13 +35,13 @@ trilio_kubernetes_cli: true
 # Currently Supports AWS S3 ONLY
 # IMPORTANT: See templates/target.yaml.j2 to modify for other targets
 # TODO: Specify NFS or S3
-trilio_kubernetes_target_name: nfs-sa
+trilio_kubernetes_target_name: sa-lab-nfs-share1
 trilio_kubernetes_target_namespace: trilio-system
 #
 # Backup Plan Details
 # Note this must be relevant to the test/demo app
 trilio_kubernetes_backup_type: Full
-trilio_kubernetes_create_backupplan: false
+trilio_kubernetes_create_backupplan: true
 trilio_kubernetes_create_backup: true
 trilio_kubernetes_backupplan_name: "pipeline-backupplan"
 trilio_kubernetes_backup_name: "pipeline-backup"
